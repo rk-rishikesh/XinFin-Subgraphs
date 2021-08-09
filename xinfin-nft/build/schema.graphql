@@ -1,0 +1,14 @@
+type NFTData @entity {
+  id: ID!
+  tokenId: BigInt!
+  nftAddress: String!
+  owner: Account!
+  tokenURI: String
+}
+
+type Account @entity {
+  id: ID! # ETH addr
+  address: Bytes!
+  nfts: [NFTData!] @derivedFrom(field: "owner")
+}
+

@@ -1,0 +1,33 @@
+specVersion: 0.0.2
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ERC721Bid
+    network: mumbai
+    source:
+      address: "0x358f28D925Ff56dAfAeA3c522e205Ac485E00897"
+      abi: ERC721Bid
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - BidCreated
+        - BidAccepted
+        - BidCancelled
+        - ChangedOwnerCutPerMillion
+      abis:
+        - name: ERC721Bid
+          file: ERC721Bid\abis\ERC721Bid.json
+      eventHandlers:
+        - event: BidCreated(bytes32,indexed address,indexed uint256,indexed address,uint256,uint256)
+          handler: handleBidCreated
+        - event: BidAccepted(bytes32,indexed address,indexed uint256,address,indexed
+            address,uint256,uint256)
+          handler: handleBidAccepted
+        - event: BidCancelled(bytes32,indexed address,indexed uint256,indexed address)
+          handler: handleBidCancelled
+        - event: ChangedOwnerCutPerMillion(uint256)
+          handler: handleChangedOwnerCutPerMillion
+      file: ERC721Bid\ERC721Bid.wasm
