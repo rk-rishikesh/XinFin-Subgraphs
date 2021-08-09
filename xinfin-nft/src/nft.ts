@@ -8,17 +8,9 @@ import {
 import * as status from './status'
 //import * as addresses from '../../data/addresses'
 
-// export function isMint(event: Transfer): boolean {
-//   return event.params.from.toHexString() == addresses.Null
-// }
-
-// export function getNFTId(
-//   category: string,
-//   contractAddress: string,
-//   tokenId: string
-// ): string {
-//   return category + '-' + contractAddress + '-' + tokenId
-// }
+export function isMint(event: Transfer): boolean {
+  return event.params._from.toHexString() == '0x0000000000000000000000000000000000000000'
+}
 
 export function getTokenURI(event: Transfer): string {
   let erc721 = NFT.bind(event.address)
@@ -38,7 +30,7 @@ export function getTokenURI(event: Transfer): string {
   return tokenURI
 }
 
-export function updateNFTOrderProperties(nft: NFT, order: Order): NFT {
+export function updateNFTOrderProperties(nft: NFTData, order: Order): NFTData {
   if (order.status == status.OPEN) {
     return addNFTOrderProperties(nft, order)
   } else if (order.status == status.SOLD || order.status == status.CANCELLED) {
@@ -48,7 +40,7 @@ export function updateNFTOrderProperties(nft: NFT, order: Order): NFT {
   }
 }
 
-export function addNFTOrderProperties(nft: NFT, order: Order): NFT {
+export function addNFTOrderProperties(nft: NFTData, order: Order): NFTData {
   nft.activeOrder = order.id
   nft.searchOrderStatus = order.status
   nft.searchOrderPrice = order.price
@@ -57,7 +49,7 @@ export function addNFTOrderProperties(nft: NFT, order: Order): NFT {
   return nft
 }
 
-export function clearNFTOrderProperties(nft: NFT): NFT {
+export function clearNFTOrderProperties(nft: NFTData): NFTData {
   nft.activeOrder = ''
   nft.searchOrderStatus = null
   nft.searchOrderPrice = null
@@ -66,7 +58,7 @@ export function clearNFTOrderProperties(nft: NFT): NFT {
   return nft
 }
 
-export function cancelActiveOrder(nft: NFT, now: BigInt): boolean {
+export function cancelActiveOrder(nft: NFTData, now: BigInt): boolean {
   let oldOrder = Order.load(nft.activeOrder)
   if (oldOrder != null && oldOrder.status == status.OPEN) {
     // Here we are setting old orders as cancelled, because the smart contract allows new orders to be created

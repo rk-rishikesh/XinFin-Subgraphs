@@ -6,19 +6,6 @@ import {
     Transfer
   } from "../generated/NFT/NFT"
 import * as status from './status'
-//import * as addresses from '../../data/addresses'
-
-// export function isMint(event: Transfer): boolean {
-//   return event.params.from.toHexString() == addresses.Null
-// }
-
-// export function getNFTId(
-//   category: string,
-//   contractAddress: string,
-//   tokenId: string
-// ): string {
-//   return category + '-' + contractAddress + '-' + tokenId
-// }
 
 export function getTokenURI(event: Transfer): string {
   let erc721 = NFT.bind(event.address)
