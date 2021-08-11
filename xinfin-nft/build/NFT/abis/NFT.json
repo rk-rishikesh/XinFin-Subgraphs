@@ -51,6 +51,29 @@
     "type": "function"
   },
   {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_tokenId",
+        "type": "uint256"
+      },
+      {
+        "name": "_uri",
+        "type": "string"
+      }
+    ],
+    "name": "addNFTMetadata",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "constant": true,
     "inputs": [],
     "name": "totalSupply",
@@ -322,6 +345,20 @@
     "type": "function"
   },
   {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_uri",
+        "type": "string"
+      }
+    ],
+    "name": "registerNFT",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "name": "_name",
@@ -418,46 +455,5 @@
     ],
     "name": "ApprovalForAll",
     "type": "event"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_tokenId",
-        "type": "uint256"
-      },
-      {
-        "name": "_uri",
-        "type": "string"
-      }
-    ],
-    "name": "registerNFT",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_tokenId",
-        "type": "uint256"
-      },
-      {
-        "name": "_uri",
-        "type": "string"
-      }
-    ],
-    "name": "addNFTMetadata",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
   }
 ]

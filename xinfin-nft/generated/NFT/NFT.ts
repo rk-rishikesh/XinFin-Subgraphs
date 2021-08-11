@@ -151,6 +151,38 @@ export class NFT extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
+  addNFTMetadata(_tokenId: BigInt, _uri: string): boolean {
+    let result = super.call(
+      "addNFTMetadata",
+      "addNFTMetadata(uint256,string):(bool)",
+      [
+        ethereum.Value.fromUnsignedBigInt(_tokenId),
+        ethereum.Value.fromString(_uri)
+      ]
+    );
+
+    return result[0].toBoolean();
+  }
+
+  try_addNFTMetadata(
+    _tokenId: BigInt,
+    _uri: string
+  ): ethereum.CallResult<boolean> {
+    let result = super.tryCall(
+      "addNFTMetadata",
+      "addNFTMetadata(uint256,string):(bool)",
+      [
+        ethereum.Value.fromUnsignedBigInt(_tokenId),
+        ethereum.Value.fromString(_uri)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
   totalSupply(): BigInt {
     let result = super.call("totalSupply", "totalSupply():(uint256)", []);
 
@@ -356,38 +388,6 @@ export class NFT extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
-
-  addNFTMetadata(_tokenId: BigInt, _uri: string): boolean {
-    let result = super.call(
-      "addNFTMetadata",
-      "addNFTMetadata(uint256,string):(bool)",
-      [
-        ethereum.Value.fromUnsignedBigInt(_tokenId),
-        ethereum.Value.fromString(_uri)
-      ]
-    );
-
-    return result[0].toBoolean();
-  }
-
-  try_addNFTMetadata(
-    _tokenId: BigInt,
-    _uri: string
-  ): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
-      "addNFTMetadata",
-      "addNFTMetadata(uint256,string):(bool)",
-      [
-        ethereum.Value.fromUnsignedBigInt(_tokenId),
-        ethereum.Value.fromString(_uri)
-      ]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBoolean());
-  }
 }
 
 export class ApproveCall extends ethereum.Call {
@@ -421,6 +421,44 @@ export class ApproveCall__Outputs {
 
   constructor(call: ApproveCall) {
     this._call = call;
+  }
+}
+
+export class AddNFTMetadataCall extends ethereum.Call {
+  get inputs(): AddNFTMetadataCall__Inputs {
+    return new AddNFTMetadataCall__Inputs(this);
+  }
+
+  get outputs(): AddNFTMetadataCall__Outputs {
+    return new AddNFTMetadataCall__Outputs(this);
+  }
+}
+
+export class AddNFTMetadataCall__Inputs {
+  _call: AddNFTMetadataCall;
+
+  constructor(call: AddNFTMetadataCall) {
+    this._call = call;
+  }
+
+  get _tokenId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get _uri(): string {
+    return this._call.inputValues[1].value.toString();
+  }
+}
+
+export class AddNFTMetadataCall__Outputs {
+  _call: AddNFTMetadataCall;
+
+  constructor(call: AddNFTMetadataCall) {
+    this._call = call;
+  }
+
+  get value0(): boolean {
+    return this._call.outputValues[0].value.toBoolean();
   }
 }
 
@@ -576,6 +614,36 @@ export class SafeTransferFrom1Call__Outputs {
   }
 }
 
+export class RegisterNFTCall extends ethereum.Call {
+  get inputs(): RegisterNFTCall__Inputs {
+    return new RegisterNFTCall__Inputs(this);
+  }
+
+  get outputs(): RegisterNFTCall__Outputs {
+    return new RegisterNFTCall__Outputs(this);
+  }
+}
+
+export class RegisterNFTCall__Inputs {
+  _call: RegisterNFTCall;
+
+  constructor(call: RegisterNFTCall) {
+    this._call = call;
+  }
+
+  get _uri(): string {
+    return this._call.inputValues[0].value.toString();
+  }
+}
+
+export class RegisterNFTCall__Outputs {
+  _call: RegisterNFTCall;
+
+  constructor(call: RegisterNFTCall) {
+    this._call = call;
+  }
+}
+
 export class ConstructorCall extends ethereum.Call {
   get inputs(): ConstructorCall__Inputs {
     return new ConstructorCall__Inputs(this);
@@ -607,77 +675,5 @@ export class ConstructorCall__Outputs {
 
   constructor(call: ConstructorCall) {
     this._call = call;
-  }
-}
-
-export class RegisterNFTCall extends ethereum.Call {
-  get inputs(): RegisterNFTCall__Inputs {
-    return new RegisterNFTCall__Inputs(this);
-  }
-
-  get outputs(): RegisterNFTCall__Outputs {
-    return new RegisterNFTCall__Outputs(this);
-  }
-}
-
-export class RegisterNFTCall__Inputs {
-  _call: RegisterNFTCall;
-
-  constructor(call: RegisterNFTCall) {
-    this._call = call;
-  }
-
-  get _tokenId(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get _uri(): string {
-    return this._call.inputValues[1].value.toString();
-  }
-}
-
-export class RegisterNFTCall__Outputs {
-  _call: RegisterNFTCall;
-
-  constructor(call: RegisterNFTCall) {
-    this._call = call;
-  }
-}
-
-export class AddNFTMetadataCall extends ethereum.Call {
-  get inputs(): AddNFTMetadataCall__Inputs {
-    return new AddNFTMetadataCall__Inputs(this);
-  }
-
-  get outputs(): AddNFTMetadataCall__Outputs {
-    return new AddNFTMetadataCall__Outputs(this);
-  }
-}
-
-export class AddNFTMetadataCall__Inputs {
-  _call: AddNFTMetadataCall;
-
-  constructor(call: AddNFTMetadataCall) {
-    this._call = call;
-  }
-
-  get _tokenId(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get _uri(): string {
-    return this._call.inputValues[1].value.toString();
-  }
-}
-
-export class AddNFTMetadataCall__Outputs {
-  _call: AddNFTMetadataCall;
-
-  constructor(call: AddNFTMetadataCall) {
-    this._call = call;
-  }
-
-  get value0(): boolean {
-    return this._call.outputValues[0].value.toBoolean();
   }
 }
